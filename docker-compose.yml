@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  app:
+    build: .
+    command: rails server -p 3000 -b 0.0.0.0
+    volumes:
+      - D:\Code\messages:/usr/src/app/app
+    ports:
+      - "3000:3000"
+    links:
+      - db
+
+  db:
+    image: postgres:latest
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432"
+
+volumes:
+  db-data:
