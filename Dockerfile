@@ -17,7 +17,7 @@ COPY . ./
 EXPOSE 3000
 
 # Launching rails server
-WORKDIR /usr/src/app/myapp
+WORKDIR /usr/src/app/app
 
 # Configure "bundle exec" as default
 ENTRYPOINT ["bundle", "exec"]
