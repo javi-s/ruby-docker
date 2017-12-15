@@ -10,8 +10,11 @@ WORKDIR /usr/src/app/
 COPY Gemfile* ./
 RUN bundle install
 
+# Create app directory
+RUN mkdir app
+
 # Copy the app
-COPY . ./
+COPY app app/
 
 # Expose port 3000
 EXPOSE 3000
