@@ -1,3 +1,3 @@
-# Docker Compose: Rails + PostgreSQL
+# Docker Compose & K8s: NGINX + Rails + PostgreSQL
 
-Docker Compose setup for Rails development with PostgreSQL.
+Docker Compose & K8s setup for Rails development with PostgreSQL and a SSL-enabled NGINX front end.

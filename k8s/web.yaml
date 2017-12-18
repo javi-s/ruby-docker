@@ -1,0 +1,59 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.6.0 (e4adfef)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web
+  name: web
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: web
+    spec:
+      containers:
+      - image: "registry.eu-de.bluemix.net/test_service/rubydocker_web:3"
+        name: web
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        env:
+        - name: CONTAINER_RESOLVER
+          value: "kube-dns.kube-system.svc.cluster.local"
+        - name: CONTAINER_LOCALDOMAIN
+          value: ".default.svc.cluster.local"
+        command: ["/bin/sh"]
+        args: ["-c", "envsubst '$WWW_ROOT:$CONTAINER_RESOLVER:$CONTAINER_LOCALDOMAIN' < /etc/nginx/sites-available/rubysite.template > /etc/nginx/sites-available/rubysite.conf && nginx -g 'daemon off;'"]
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.6.0 (e4adfef)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web
+  name: web
+spec:
+  type: NodePort
+  ports:
+  - name: "80"
+    port: 80
+    nodePort: 30080
+  - name: "443"
+    port: 443
+    nodePort: 30443
+  selector:
+    io.kompose.service: web
+status:
+  loadBalancer: {}

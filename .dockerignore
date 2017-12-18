@@ -5,3 +5,4 @@ Dockerfile*
 Gemfile.lock
 README.md
 app/.gitignore
+k8s
